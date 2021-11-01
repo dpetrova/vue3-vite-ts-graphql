@@ -26,7 +26,7 @@ import { uploadFile } from 'driver/bucket'; //use the driver of the AWS-Amplify
 export default defineComponent({
   name: 'AvatarInput',
   props: {
-    modelValue: {
+    value: {
       type: Object,
       required: false,
       default: () => ({}),
@@ -76,6 +76,10 @@ export default defineComponent({
         reader.readAsDataURL(avatar.file);
       }
     };
+
+    context.expose({
+      fileUpload,
+    });
 
     return { ...toRefs(avatar), fileUpload, getFile };
   },

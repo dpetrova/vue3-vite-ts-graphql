@@ -22,7 +22,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ['i18n', 'axios', 'amplify'],
+    boot: ['i18n', 'axios', 'amplify', 'routeGuard'],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ['app.scss'],
@@ -76,7 +76,6 @@ module.exports = configure(function (ctx) {
           exclude: /node_modules/,
           loader: 'graphql-tag/loader',
         });
-
         cfg.module.rules.push({
           test: /\.mjs$/,
           include: /node_modules/,
@@ -85,14 +84,12 @@ module.exports = configure(function (ctx) {
             fullySpecified: false,
           },
         });
-
         cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /node_modules/,
         });
-
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
           driver: path.resolve(__dirname, './src/driver'),
@@ -122,7 +119,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Dialog'],
     },
 
     // animations: 'all', // --- includes all animations

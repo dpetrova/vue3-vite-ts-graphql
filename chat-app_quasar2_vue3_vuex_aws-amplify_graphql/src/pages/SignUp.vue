@@ -1,24 +1,27 @@
 <template>
-  <q-page padding class="flex flex-center bg-grey-1">
+  <q-page class="flex flex-center bg-grey-1">
     <q-card style="width: 350px">
       <q-card-section>
-        <h6 class="no-margin">Chat Application</h6>
+        <h6 class="no-margin">Create a new account</h6>
       </q-card-section>
       <q-card-section>
         <q-form class="q-gutter-md">
+          <name-input v-model.trim="name" />
+          <username-input v-model.trim="username" />
           <email-input v-model.trim="email" />
           <password-input v-model.trim="password" />
         </q-form>
       </q-card-section>
       <q-card-actions align="right">
         <q-btn
-          label="Create new account"
+          label="Reset"
+          type="reset"
           color="primary"
           flat
           class="q-ml-sm"
-          @click="createAccount"
+          @click="onReset"
         />
-        <q-btn label="Login" type="submit" color="primary" @click="onSubmit" />
+        <q-btn label="Create" type="submit" color="primary" @click="onSubmit" />
       </q-card-actions>
       <q-inner-loading :showing="isLoading">
         <q-spinner size="50px" color="primary" />
@@ -35,20 +38,21 @@ import {
   toRefs,
   onBeforeMount,
 } from 'vue';
-//import { useGetters, useActions } from 'vuex-composition-helpers';
 import { useRouter, useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import { useQuasar, LocalStorage } from 'quasar';
 import PasswordInput from 'components/PasswordInput.vue';
 import EmailInput from 'components/EmailInput.vue';
+import UsernameInput from 'components/UsernameInput.vue';
+import NameInput from 'components/NameInput.vue';
 
 export default defineComponent({
-  name: 'Index',
+  name: 'SignUp',
   components: {
-    // PasswordInput: () => import('components/PasswordInput'),
-    // EmailInput: () => import('components/EmailInput'),
     PasswordInput,
     EmailInput,
+    UsernameInput,
+    NameInput,
   },
   setup(props, { root }) {
     const router = useRouter();
@@ -57,25 +61,18 @@ export default defineComponent({
     const $q = useQuasar();
 
     const credentials = reactive({
+      name: '',
+      username: '',
       email: '',
       password: '',
     });
 
-    // const { getUserId } = useGetters({
-    //   getUserId: 'getUserId',
-    // });
-    // const { signInUser } = useActions({
-    //   signInUser: 'signInUser'
-    // })
-    //const isLoading = computed(() => root.$store.getters.isLoading)
-    //const getUserId = computed(() => root.$store.getters.getUserId)
     const isLoading = computed(() => store.getters[`user/isLoading`]);
-    const getUserId = computed(() => store.getters[`user/getUserId`]);
 
     const onSubmit = async () => {
       try {
-        await store.dispatch('user/signInUser', credentials);
-        await router.push({ name: 'Contacts' });
+        await store.dispatch('user/signUpNewUser', credentials);
+        await router.replace({ name: 'Validate' });
       } catch (e) {
         $q.dialog({
           message: e.message,
@@ -83,17 +80,12 @@ export default defineComponent({
       }
     };
 
-    const createAccount = () => {
-      router.push({ name: 'SignUp' });
+    const onReset = () => {
+      credentials.email = '';
+      credentials.password = '';
     };
 
-    onBeforeMount(async () => {
-      if (getUserId.value) {
-        await router.replace({ name: 'Contacts' });
-      }
-    });
-
-    return { ...toRefs(credentials), isLoading, createAccount, onSubmit };
+    return { ...toRefs(credentials), isLoading, onSubmit, onReset };
   },
 });
 </script>

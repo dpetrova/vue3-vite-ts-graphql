@@ -1,6 +1,6 @@
 <template>
   <q-input
-    :value="modelValue"
+    :value="value"
     :type="isPwd ? 'password' : 'text'"
     :label="label"
     :rules="[
@@ -9,7 +9,7 @@
         val.length >= 8 || 'Your password need to have 8 or more characters',
     ]"
     :hint="
-      modelValue.length < 8 ? 'Your password has a minimum of 8 characters' : ''
+      value.length < 8 ? 'Your password has a minimum of 8 characters' : ''
     "
     outlined
     lazy-rules
@@ -31,7 +31,7 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'PasswordInput',
   props: {
-    modelValue: {
+    value: {
       type: String,
       default: '',
       required: false,

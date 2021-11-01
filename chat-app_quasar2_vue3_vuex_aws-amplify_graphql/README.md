@@ -32,11 +32,14 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 # Project Content
 
-- Create Quasar v.2 app
-- Create and setup AWS Amplify environment
+- Creating Quasar v.2 app
+- Creating and setup AWS Amplify environment
 - Init AWS Amplify project
-- Create AWS Cognito authentication
-- Create GraphQL API
-- Add GraphQL client to the application
-- Create AWS Amplify driver for the application
-- Create custom components and layouts
+- Creating AWS Cognito authentication
+- Creating GraphQL API
+- Adding GraphQL client to the application
+- Creating AWS Amplify driver for the application
+- Creating custom components and layouts
+- Creating GraphQL queries and fragments
+- Creating vuex modules
+- Creating routes

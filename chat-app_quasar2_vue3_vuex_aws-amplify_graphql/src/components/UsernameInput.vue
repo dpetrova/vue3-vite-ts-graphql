@@ -1,6 +1,6 @@
 <template>
   <q-input
-    :value="modelValue"
+    :value="value"
     :rules="[
       (val) => (val && val.length > 5) || 'Please type a valid Username',
     ]"
@@ -17,7 +17,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'UsernameInput',
   props: {
-    modelValue: {
+    value: {
       type: String,
       default: '',
       required: false,

@@ -1,6 +1,6 @@
 <template>
   <q-input
-    :value="modelValue"
+    :value="value"
     :rules="[
       (val) =>
         (val && val.length > 0 && validateEmail(val)) ||
@@ -20,7 +20,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'EmailInput',
   props: {
-    modelValue: {
+    value: {
       type: String,
       default: '',
       required: false,
